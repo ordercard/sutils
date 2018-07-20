@@ -5,6 +5,7 @@ hq
 文档地址
 https://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/reference/htmlsingle/#_advanced_topics
 spring mvc 文档地址 https://docs.spring.io/spring/docs/5.0.7.RELEASE/spring-framework-reference/web.html#mvc
+https://blog.csdn.net/tangtong1/article/details/51326887   spring文档
 
 @EnableAutoConfiguration：启用Spring Boot的自动配置机制
 @ComponentScan：@Component在应用程序所在的程序包上启用扫描（请参阅最佳做法）
