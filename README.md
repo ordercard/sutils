@@ -29,4 +29,13 @@ public  class Application {
 
 
 
+
+16.自动配置
+Spring Boot自动配置尝试根据您添加的jar依赖项自动配置Spring应用程序。例如，如果HSQLDB 在您的类路径中，并且您尚未手动配置任何数据库连接bean，则Spring Boot会自动配置内存数据库。
+
+您需要通过向其中一个类添加@EnableAutoConfiguration或 @SpringBootApplication注释来选择自动配置@Configuration。
+
+
+
+
 如果按照上面的建议构建代码（在根包中定位应用程序类），则可以添加@ComponentScan不带任何参数的代码。您的所有应用程序组件（的@Component，@Service，@Repository，@Controller等）自动注册为春豆。
