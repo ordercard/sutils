@@ -1,8 +1,6 @@
 package com.spring.sutils.vaild;
 
 
-import com.hbc.common.exception.CommonReturnCode;
-import com.laiwang.common.bdata.rsp.ReturnResult;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,7 +26,7 @@ public class ParameterValidator {
     @Around(value = "anyController()")
     public Object basicParameterCheck(ProceedingJoinPoint jp) throws Throwable {
         Object[] args = jp.getArgs();
-        for (Object arg : args) {
+    /**    for (Object arg : args) {
             if (arg instanceof BindingResult) {//通过它对错误的一个反馈
                 ReturnResult rs = new ReturnResult(CommonReturnCode.PARAM_ERROR.getCode(),
                         CommonReturnCode.PARAM_ERROR.getMessage());
@@ -46,7 +44,7 @@ public class ParameterValidator {
                 }
                 break;
             }
-        }
+        }*/
 
         return jp.proceed();
     }
