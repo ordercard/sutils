@@ -10,6 +10,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -286,5 +287,43 @@ public class OperateImageUtil {
             graphics2D.dispose();
 
             return resultTempImg;
+    }
+
+//圆圈的边框加头像
+    public static BufferedImage setwriteFontAndHeadImgTo( String name,String msg, BufferedImage resultTempImg,BufferedImage headImg) {
+        Graphics2D graphics2D = resultTempImg.createGraphics();
+        BufferedImage bi2 = new BufferedImage(headImg.getWidth(), headImg.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+        Ellipse2D.Double shape = new Ellipse2D.Double(0, 0, headImg.getWidth(), headImg.getHeight());
+        Graphics2D g2 = bi2.createGraphics();
+        g2.setClip(shape);
+        // 使用 setRenderingHint 设置抗锯齿
+        g2.drawImage(headImg, 0, 0, null);
+        g2.dispose();
+
+
+
+        g2 = bi2.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        int border1 = 2;
+        //画笔是4.5个像素，BasicStroke的使用可以查看下面的参考文档
+        //使画笔时基本会像外延伸一定像素，具体可以自己使用的时候测试
+        Stroke s = new BasicStroke(2.5F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        g2.setStroke(s);
+        g2.setColor(Color.WHITE);
+        g2.drawOval(border1, border1, bi2.getWidth() - border1 * 2, bi2.getWidth() - border1 * 2);
+        g2.dispose();
+
+        graphics2D.drawImage(bi2,20,30,80,80,null);
+//          Font f = new Font("msyh", Font.PLAIN, 25);
+//          Font f  = FontUtil.getFont( Font.PLAIN,25);
+//           Color mycolor = Color.white;
+//           graphics2D.setColor(mycolor);
+//            graphics2D.setFont(f);
+//            logger.info("汉字字体测试顶顶顶顶");
+//            logger.info("前端传入name"+name);
+//            graphics2D.drawString(name,130,50);
+//            graphics2D.drawString(msg,130,84);
+        graphics2D.dispose();
+        return resultTempImg;
     }
 }
