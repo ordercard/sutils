@@ -14,9 +14,9 @@ public class JThreadTest {
     public static void main(String[] args) throws InterruptedException {
 
         //初始值  核心   最大   队列大小
-       final   JThreadPool  jThreadPool = new JBasicThreadPool(15,10,7,1000);
+       final   JThreadPool  jThreadPool = new JBasicThreadPool(2,10,7,1000);
 
-            for (int i=0;i<1000;i++){
+            for (int i=0;i<20;i++){
                 System.out.println("开始创建"+i);
                 jThreadPool.execute(()->{
                     try {
