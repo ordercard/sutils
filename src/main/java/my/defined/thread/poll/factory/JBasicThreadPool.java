@@ -120,7 +120,7 @@ public class JBasicThreadPool extends  Thread implements JThreadPool {
               }
 
               //当前队列还有任务未处理，并且act<max才会继续扩容
-              if (jRunableQueue.size()>0 && activeCount<coresize){
+              if (jRunableQueue.size()>0 && activeCount<maxSize){
 
                   for (int i=coresize;i<maxSize;i++){
                       newTread();
