@@ -14,13 +14,18 @@ public class JThreadTest {
     public static void main(String[] args) throws InterruptedException {
 
         //初始值  核心   最大   队列大小
-       final   JThreadPool  jThreadPool = new JBasicThreadPool(2,4,6,1000);
+       final   JThreadPool  jThreadPool = new JBasicThreadPool(15,10,7,1000);
 
-            for (int i=0;i<20;i++){
+            for (int i=0;i<1000;i++){
                 System.out.println("开始创建"+i);
                 jThreadPool.execute(()->{
-
+                    try {
+                        TimeUnit.SECONDS.sleep(10);
                         System.out.println(Thread.currentThread().getName()+"： 正在执行和完成");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                 });
 
                 for(;;){

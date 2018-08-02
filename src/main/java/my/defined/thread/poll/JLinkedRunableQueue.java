@@ -29,13 +29,13 @@ public class JLinkedRunableQueue implements  JRunableQueue {
     @Override
     public void offer(Runnable runnable) {
         synchronized (runnableLinkedList){
-
+            System.out.println("进入同步加入方法");
 
        if (runnableLinkedList.size()>=limit){
            jdencyPolicy.reject(runnable,threadPool);
        }
        else{
-           runnableLinkedList.add(runnable);
+           runnableLinkedList.addLast(runnable);
            runnableLinkedList.notifyAll();
 
        }}
@@ -52,6 +52,7 @@ public class JLinkedRunableQueue implements  JRunableQueue {
                 System.out.println(Thread.currentThread().getName()+"正在等待！");
                 runnableLinkedList.wait();
             } catch (InterruptedException e) {
+                System.out.println("抛出异常");
                 throw e;
             }
         }

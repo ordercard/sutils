@@ -8,5 +8,6 @@ package my.defined.thread.poll.factory;
  */
 @FunctionalInterface
 public interface JThreadFactory {
+
     Thread createThread(Runnable runnable);
 }

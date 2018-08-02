@@ -70,10 +70,9 @@ public class JBasicThreadPool extends  Thread implements JThreadPool {
     private void newTread() {
 
          InternalTask  internalTask =new InternalTask(this.jRunableQueue);
-
          Thread thread = this.jThreadFactory.createThread(internalTask);
         ThreadTask threadTask =new ThreadTask(thread,internalTask);
-        queue.offer(threadTask);
+         queue.offer(threadTask);
          this.activeCount++;
          thread.start();
 
@@ -130,7 +129,7 @@ public class JBasicThreadPool extends  Thread implements JThreadPool {
 
               }
               //当前队列没有任务处理， 需要回收，回收到coresize；
-              if (jRunableQueue.size()>0 && activeCount<coresize){
+              if (jRunableQueue.size()==0 && activeCount<coresize){
 
                   for (int i=coresize;i<activeCount;i++){
                       remeove();
