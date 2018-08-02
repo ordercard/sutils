@@ -7,6 +7,9 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,7 +29,7 @@ import java.util.Hashtable;
  * @Modify:
  */
 public class OperateImageUtil {
-
+    private static Logger logger = LoggerFactory.getLogger(OperateImageUtil.class);
     private static final String CHARSET = "utf-8";
     private static final String FORMAT_NAME = "JPG";
     // 二维码尺寸
@@ -326,4 +329,18 @@ public class OperateImageUtil {
         graphics2D.dispose();
         return resultTempImg;
     }
+
+    public static BufferedImage zipImg(BufferedImage bufferedImage,  double scale,double q) {
+        BufferedImage bufferedImage1= null;
+        try {
+            //  bufferedImage1= Thumbnails.of(bufferedImage).size(750, 3716).outputQuality(q).asBufferedImage();
+            bufferedImage1= Thumbnails.of(bufferedImage).scale(scale).outputQuality(q).asBufferedImage();
+        } catch (IOException e) {
+            logger.info("图片压缩异常=》【" + e.getMessage() + "]");
+            e.printStackTrace();
+        }
+
+        return  bufferedImage1;
+    }
+
 }
