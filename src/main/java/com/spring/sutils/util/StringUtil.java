@@ -1,8 +1,8 @@
 package com.spring.sutils.util;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.util.HtmlUtils;
 
 import java.io.File;
@@ -637,8 +637,10 @@ public final class StringUtil {
 		if (oldStr == null || "".equals(oldStr)) {
 			return "";
 		}
-		if (oldStr.length() > maxLen)
+		if (oldStr.length() > maxLen){
 			oldStr = oldStr.substring(0, maxLen);
+		}
+
 		return oldStr;
 	}
 
