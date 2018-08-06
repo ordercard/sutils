@@ -17,7 +17,6 @@ public class JThreadTest {
         final JThreadPool jThreadPool = new JBasicThreadPool(2, 10, 7, 1000);
 
         for (int i = 0; i < 20; i++) {
-            System.out.println("开始创建" + i);
             jThreadPool.execute(() -> {
                 try {
                     TimeUnit.SECONDS.sleep(10);
@@ -27,20 +26,21 @@ public class JThreadTest {
                 }
 
             });
-
         }
+            for (; ; ) {
 
-        for (; ; ) {
-
-            System.out.println("活动线程数" + jThreadPool.getActiveCount());
-            System.out.println("任务池的任务数" + jThreadPool.getQueueSize());
-            System.out.println("活动最大数core" + jThreadPool.getCoreSize());
-            System.out.println("活动最大数max" + jThreadPool.getMaxSize());
-            System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+                System.out.println("活动线程数" + jThreadPool.getActiveCount());
+                System.out.println("任务池的任务数" + jThreadPool.getQueueSize());
+                System.out.println("活动最大数core" + jThreadPool.getCoreSize());
+                System.out.println("活动最大数max" + jThreadPool.getMaxSize());
+                System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 
 
-            TimeUnit.SECONDS.sleep(5);
-        }
+                TimeUnit.SECONDS.sleep(5);
+            }
+
+
+
 
     }
 }
