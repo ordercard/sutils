@@ -6,7 +6,7 @@ package com.spring.sutils.util.tree;
  * @Date: Create in 下午5:35 2018/6/28 2018
  * @Modify:
  */
-public class RBTreeText {
+public class RBTreeTest {
     private static final int a[] = {10, 40, 30, 60, 90, 70, 20, 50, 80,123,12,34,45,56,67,213,214,344};
     private static final boolean mDebugInsert = true;    // "插入"动作的检测开关(false，关闭；true，打开)
     private static final boolean mDebugDelete = true;    // "删除"动作的检测开关(false，关闭；true，打开)
