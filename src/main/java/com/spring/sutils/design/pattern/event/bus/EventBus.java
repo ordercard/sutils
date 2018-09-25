@@ -13,7 +13,7 @@ public class EventBus implements Bus {
     private final Registry registry = new Registry();
     private String busName;
     private final static String DEFAULT_BUS_NAME = "default";
-    private final static String TOPIC_NAME = "default_topic";
+    private final static String TOPIC_NAME = "default-topic";
 
     private final Dispatcher dispatcher;
 
