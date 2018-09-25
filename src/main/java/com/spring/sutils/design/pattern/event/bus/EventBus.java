@@ -18,11 +18,11 @@ public class EventBus implements Bus {
     private final Dispatcher dispatcher;
 
     public EventBus() {
-        this(DEFAULT_BUS_NAME, null, Dispatcher.SEQ_EXECTOR_SERVICE);
+        this(DEFAULT_BUS_NAME, null, Dispatcher.SEQ_EXECUTOR_SERVICE);
     }
 
     public EventBus(String busName) {
-        this(busName, null, Dispatcher.SEQ_EXECTOR_SERVICE);
+        this(busName, null, Dispatcher.SEQ_EXECUTOR_SERVICE);
     }
 
     public EventBus(String busName, EventExceptionHandler eventExceptionHandler, Executor executor) {
@@ -31,7 +31,7 @@ public class EventBus implements Bus {
     }
 
     public EventBus(EventExceptionHandler eventExceptionHandler) {
-        this(DEFAULT_BUS_NAME, eventExceptionHandler, Dispatcher.SEQ_EXECTOR_SERVICE);
+        this(DEFAULT_BUS_NAME, eventExceptionHandler, Dispatcher.SEQ_EXECUTOR_SERVICE);
     }
 
 

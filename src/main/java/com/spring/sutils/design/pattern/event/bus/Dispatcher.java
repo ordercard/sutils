@@ -19,8 +19,8 @@ public class Dispatcher {
     public  static final  Executor SEQ_EXECUTOR_SERVICE=SeqExecutorService.INSTANCE;
     public  static final  Executor  PRE_THREAD_EXECUTOR_SERVICE=PreThreadExecutorService.INSTANCE;
 
-    public Dispatcher(Executor executorServicel, EventExceptionHandler eventExceptionHandler) {
-        this.executorServicel = executorServicel;
+    public Dispatcher(Executor executorService, EventExceptionHandler eventExceptionHandler) {
+        this.executorService = executorService;
         this.eventExceptionHandler = eventExceptionHandler;
     }
 
@@ -52,8 +52,8 @@ public class Dispatcher {
 
     private void realInvokeSubscribe(Subscriber subscriber, Object event, Bus eventBus) {
 
-        Method  subscribeMethod = subscriber.getSubscribeMethod();
-        Object  subscibeObject =subscriber.getSubscribeObject();
+        final Method  subscribeMethod = subscriber.getSubscribeMethod();
+        final Object  subscibeObject =subscriber.getSubscribeObject();
         executorService.execute(()->{
             try {
                 subscribeMethod.invoke(subscibeObject,event);
@@ -61,7 +61,7 @@ public class Dispatcher {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 if (null!=eventExceptionHandler){
-                    eventExceptionHandler.handle(e,new BaseEventContext(eventBus.getBusName(),subScriber,event) );
+                    eventExceptionHandler.handle(e,new BaseEventContext(eventBus.getBusName(),subscriber,event));
                 }
                 e.printStackTrace();
             }
@@ -88,6 +88,62 @@ public class Dispatcher {
 
     static Dispatcher preDispatcher(EventExceptionHandler  eventExceptionHandler){
         return  newDispatcher(eventExceptionHandler,SEQ_EXECUTOR_SERVICE);
+    }
+    private static class SeqExecutorService   implements Executor {
+        private  final  static SeqExecutorService INSTANCE = new SeqExecutorService();
+
+        @Override
+        public void execute(Runnable command) {
+            command.run();
+        }
+    }
+
+    private static class PreThreadExecutorService implements Executor{
+        private final static PreThreadExecutorService  INSTANCE= new PreThreadExecutorService();
+
+        @Override
+        public void execute(Runnable command) {
+            new Thread(command).start();
+
+        }
+    }
+
+
+    private static  class BaseEventContext implements EventContext {
+
+        private final String eventBusName;
+
+        private final Subscriber subscriber;
+
+        private final Object event;
+
+        public BaseEventContext(String eventBusName, Subscriber subscriber, Object event) {
+            this.eventBusName = eventBusName;
+            this.subscriber = subscriber;
+            this.event = event;
+        }
+
+
+
+        @Override
+        public String getSource() {
+            return this.eventBusName;
+        }
+
+        @Override
+        public Object getSuvscriber() {
+            return subscriber != null ?subscriber.getSubscribeObject():null;
+        }
+
+        @Override
+        public Method getSubscribe() {
+            return subscriber != null ? subscriber.getSubscribeMethod():null;
+        }
+
+        @Override
+        public Object getEvent() {
+            return this.event;
+        }
     }
 
 
