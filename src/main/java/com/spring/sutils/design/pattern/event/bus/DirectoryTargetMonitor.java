@@ -11,7 +11,7 @@ import java.nio.file.*;
  */
 public class DirectoryTargetMonitor {
 
-    private final WatchService watchService;
+    private  WatchService watchService;
 
     private  final EventBus eventBus;
 
@@ -30,7 +30,46 @@ public class DirectoryTargetMonitor {
 
     public void startMonitor() throws IOException {
         this.watchService= FileSystems.getDefault().newWatchService();
+            //为该路径注册感兴趣的事件
+        this.path.register(watchService,StandardWatchEventKinds.ENTRY_MODIFY,StandardWatchEventKinds.ENTRY_CREATE);
+        this.start=true;
+        while (start){
+            WatchKey watchKey = null;
 
+            try {
+                watchKey=watchService.take();
+                watchKey.pollEvents().forEach(event->{
+                WatchEvent.Kind<?> kind=event.kind();
+                Path path =(Path) event.context();
+                Path child = DirectoryTargetMonitor.this.path.resolve(path);
+                //提交FileChangeEvent 到EventBus
+                    eventBus.post(new FileChangeEvent(child,kind));
+
+                });
+            } catch (InterruptedException e) {
+                this.start=false;
+                e.printStackTrace();
+            }finally {
+                if(watchKey!=null){
+                    watchKey.reset();
+                }
+            }
+
+        }
+    }
+
+    public void stopMonitor() throws IOException {
+
+
+        System.out.println("结束监控目录");
+        Thread.currentThread().interrupt();
+        this.start=false;
+        this.watchService.close();
+        System.out.println("关闭完成");
 
     }
+
+
+
+
 }
